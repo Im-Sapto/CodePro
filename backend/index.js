@@ -14,13 +14,13 @@ const file = require("./FileOperations");
 const app = express()
 const port = process.env.PORT || 3000;        // Using env variable
 
-app.use(cors({
-    origin: 'https://code-pro-one.vercel.app',    // Replace with your frontend's origin
-    methods: 'POST, DELETE',       // Allow only POST requests from the frontend
-    credentials: true,
-  }));
+// app.use(cors({
+//     origin: 'https://code-pro-one.vercel.app',    // Replace with your frontend's origin
+//     methods: 'POST, DELETE',       // Allow only POST requests from the frontend
+//     credentials: true,
+//   }));
 
-// app.use(cors())
+app.use(cors())
 
 app.use(bodyParser.json());
 
