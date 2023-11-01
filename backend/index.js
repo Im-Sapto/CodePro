@@ -23,6 +23,17 @@ const port = process.env.PORT || 3000;        // Using env variable
 app.use(cors())
 
 app.use(bodyParser.json());
+app.use((req,res,next)=>{
+  res.header('Access-Control-Allow-Origin', 'https://code-pro-one.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  res.header('Access-Control-Allow-Credentials', 'true');
+
+  if (req.method === 'OPTIONS'){
+    res.status(200).end();
+  }else{
+    next();
+  }
+})
 
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -34,7 +45,6 @@ mongoose.connect(process.env.MONGO_URL, {
 .catch((err) => {
   console.error("Error connecting to the database:", err.message);
 });
-
 
 
 
