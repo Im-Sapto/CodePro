@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import '../../App.css'
-
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
@@ -9,6 +8,10 @@ import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/theme-dracula";
 
 function Compiler() {
+
+    const userData = useSelector((state) => state.auth.userData);
+    console.log(userData.name);
+
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('py');
     const [output, setOutput] = useState('');
@@ -39,7 +42,7 @@ function Compiler() {
 
     const showFiles = () =>{
       axios.post("https://code-pro-backend.vercel.app/user/files",{
-        username : "Saptarshe Sinha"
+        username : userData.name
       })
       .then((res)=>{
         // console.log(res.data);
@@ -78,7 +81,7 @@ function Compiler() {
     
     const handleFile = ()=>{
     axios.post("https://code-pro-backend.vercel.app/user/add",{
-      username : "Saptarshe Sinha",
+      username : userData.name,
       FileName : filename + "." + language,
       Code : code,
       Language : language
@@ -95,7 +98,7 @@ function Compiler() {
   const handleFiledDelete = (filename) =>{
     axios.delete("https://code-pro-backend.vercel.app/user/delete",{
       data : {
-        username : "Saptarshe Sinha",
+        username : userData.name,
         FileName : filename
       }
     })
@@ -115,7 +118,7 @@ function Compiler() {
 
   const EditFile =()=>{
     axios.post("https://code-pro-backend.vercel.app/user/updateFile",{
-      username : "Saptarshe Sinha",
+      username : userData.name,
       FileName : currentFile,
       Code : code,
       Language : language
