@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
-const qs = require('qs');
+// const qs = require('qs');
 const file = require("./FileOperations");
 
 
@@ -14,26 +14,16 @@ const file = require("./FileOperations");
 const app = express()
 const port = process.env.PORT || 3000;        // Using env variable
 
-// app.use(cors({
-//     origin: 'https://code-pro-one.vercel.app',    // Replace with your frontend's origin
-//     methods: 'POST, DELETE',       // Allow only POST requests from the frontend
-//     credentials: true,
-//   }));
 
-app.use(cors())
+const allowedOrigins = ['http://localhost:5173', 'https://code-pro-one.vercel.app'];
 
+// Configure CORS with the allowed origins
+app.use(cors({
+  origin: allowedOrigins,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, 
+}));
 app.use(bodyParser.json());
-app.use((req,res,next)=>{
-  res.header('Access-Control-Allow-Origin', 'https://code-pro-one.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-  res.header('Access-Control-Allow-Credentials', 'true');
-
-  if (req.method === 'OPTIONS'){
-    res.status(200).end();
-  }else{
-    next();
-  }
-})
 
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -47,34 +37,58 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 
 
+  
+// Define an API endpoint for code execution
+app.post('/compile', (req, res) => {
+  const { code , language, input } = req.body;
+  var languageCode = '5';
 
+  switch (language) {
+    case 'c':
+      languageCode = '6' 
+      break;
+    case 'cpp':
+      languageCode = '7' 
+      break;
+    case 'java':
+      languageCode = '4' 
+      break;
+    case 'cs':
+      languageCode = '1' 
+      break;
+    case 'js':
+      languageCode = '17' 
+      break;
+    case 'go':
+      languageCode = '20' 
+      break;
   
-// Define a route to handle the POST request from your React frontend
-  app.post('/api/compile',(req, res) => {
-    const { code , language, input } = req.body;
+    default:
+      languageCode = '5'
+      break;
+  }
+
+const options = {
+  method: 'POST',
+  url: 'https://code-compiler.p.rapidapi.com/v2',
+  headers: {
+    'content-type': 'application/json',
+    'X-RapidAPI-Key': '9b1a72d15emshd433e494e613ca8p147134jsn08e961dc50bf',
+    'X-RapidAPI-Host': 'code-compiler.p.rapidapi.com'
+  },
+  data: {
+    LanguageChoice: languageCode , Program: code , Input : input
+  }
+};
+
+axios.request(options).then(function (response) {
+  console.log(response.data);
+  return res.send(response.data);
+}).catch(function (error) {
+  console.error(error);
+});
+});
   
-    var data = qs.stringify({
-      'code': code,
-      'language': language,
-      'input': input
-    })
-    var config = {
-        method: 'post',
-        url: 'https://api.codex.jaagrav.in',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data : data
-    };
-  
-    axios(config)
-    .then((response)=>{
-      res.send(response.data);
-    })
-    .catch((err)=>{
-      res.status(500).json({ error : err.message });
-    });
-  });
 
 app.use("/user", file);   // File system updated
 
