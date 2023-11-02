@@ -28,8 +28,8 @@ function Compiler() {
       })
         .then((response) => {
           console.log(response.data);
-          setOutput(response.data.output);
-          setError(response.data.error);
+          setOutput(response.data.Result);
+          setError(response.data.Errors);
         })
         .catch((error) => {
           console.log(error);
