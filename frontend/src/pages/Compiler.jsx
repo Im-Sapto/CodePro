@@ -39,7 +39,7 @@ function Compiler() {
 
     const showFiles = () =>{
       axios.post("https://code-pro-backend.vercel.app/user/files",{
-        username : "Arijeet Sinha"
+        username : "Saptarshe Sinha"
       })
       .then((res)=>{
         // console.log(res.data);
@@ -78,7 +78,7 @@ function Compiler() {
     
     const handleFile = ()=>{
     axios.post("https://code-pro-backend.vercel.app/user/add",{
-      username : "Arijeet Sinha",
+      username : "Saptarshe Sinha",
       FileName : filename + "." + language,
       Code : code,
       Language : language
@@ -95,7 +95,7 @@ function Compiler() {
   const handleFiledDelete = (filename) =>{
     axios.delete("https://code-pro-backend.vercel.app/user/delete",{
       data : {
-        username : "Arijeet Sinha",
+        username : "Saptarshe Sinha",
         FileName : filename
       }
     })
@@ -115,7 +115,7 @@ function Compiler() {
 
   const EditFile =()=>{
     axios.post("https://code-pro-backend.vercel.app/user/updateFile",{
-      username : "Arijeet Sinha",
+      username : "Saptarshe Sinha",
       FileName : currentFile,
       Code : code,
       Language : language
