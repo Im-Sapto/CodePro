@@ -1,54 +1,100 @@
-// require('dotenv').config()         
-import 'dotenv/config';              //importing 'dotenv'
+const http = require('http');
+require('dotenv').config();
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const axios = require('axios');
+// const qs = require('qs');
+const file = require("./FileOperations");
 
-// const express = require('express');       //common JS
-import express from 'express';          //Module JS
 
-import axios from 'axios';
-import bodyParser from 'body-parser';
-// import cors from 'cors';
-import qs from 'qs';
 
 
 const app = express()
 const port = process.env.PORT || 3000;        // Using env variable
 
-// app.use(cors({
-//     origin: 'http://localhost:5173', // Replace with your frontend's origin
-//     methods: 'POST', // Allow only POST requests from the frontend
-//   }));
 
+const allowedOrigins = ['http://localhost:5173', 'https://code-pro-one.vercel.app'];
+
+// Configure CORS with the allowed origins
+app.use(cors({
+  origin: allowedOrigins,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, 
+}));
 app.use(bodyParser.json());
 
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log("DB Connection Successful");
+})
+.catch((err) => {
+  console.error("Error connecting to the database:", err.message);
+});
+
+
   
-// Define a route to handle the POST request from your React frontend
-  app.post('/api/compile',(req, res) => {
-    const { code , language, input } = req.body;
+// Define an API endpoint for code execution
+app.post('/compile', (req, res) => {
+  const { code , language, input } = req.body;
+  var languageCode = '5';
+
+  switch (language) {
+    case 'c':
+      languageCode = '6' 
+      break;
+    case 'cpp':
+      languageCode = '7' 
+      break;
+    case 'java':
+      languageCode = '4' 
+      break;
+    case 'cs':
+      languageCode = '1' 
+      break;
+    case 'js':
+      languageCode = '17' 
+      break;
+    case 'go':
+      languageCode = '20' 
+      break;
   
-    var data = qs.stringify({
-      'code': code,
-      'language': language,
-      'input': input
-    })
-    var config = {
-        method: 'post',
-        url: 'https://api.codex.jaagrav.in',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data : data
-    };
+    default:
+      languageCode = '5'
+      break;
+  }
+
+const options = {
+  method: 'POST',
+  url: 'https://code-compiler.p.rapidapi.com/v2',
+  headers: {
+    'content-type': 'application/json',
+    'X-RapidAPI-Key': '9b1a72d15emshd433e494e613ca8p147134jsn08e961dc50bf',
+    'X-RapidAPI-Host': 'code-compiler.p.rapidapi.com'
+  },
+  data: {
+    LanguageChoice: languageCode , Program: code , Input : input
+  }
+};
+
+axios.request(options).then(function (response) {
+  console.log(response.data);
+  return res.send(response.data);
+}).catch(function (error) {
+  console.error(error);
+});
+});
   
-    axios(config)
-    .then((response)=>{
-      res.send(response.data);
-    })
-    .catch((err)=>{
-      res.status(500).json({ error : err.message });
-    });
-  });
+
+app.use("/user", file);   // File system updated
+
+const server = http.createServer(app);
   
-  
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`)
 })
+

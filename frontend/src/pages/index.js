@@ -1,6 +1,6 @@
 import Home from "./Home";
 import Login from "./Login";
-import Signup from "./SignUp";
+import Signup from "./Signup";
 import Compiler from "./Compiler";
 import ContactUs from "./ContactUs";
 
