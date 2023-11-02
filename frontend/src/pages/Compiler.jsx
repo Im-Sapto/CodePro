@@ -20,8 +20,8 @@ function Compiler() {
     const [currentFile, setCurrentFile] = useState("");
   
     const handleCompile = () => {
-  
-      axios.post('/api/compile', {      // Added proxy in 'vite.config.js
+
+      axios.post('https://code-editor-pro-backend.vercel.app//compile', {
         code: code,
         language: language,
         input: input
@@ -32,12 +32,13 @@ function Compiler() {
           setError(response.data.error);
         })
         .catch((error) => {
+          console.log(error);
           setError(error.message);
         });
     };
 
     const showFiles = () =>{
-      axios.post("https://code-pro-backend.vercel.app/user/files",{
+      axios.post("https://code-editor-pro-backend.vercel.app//user/files",{
         username : "Arijeet Sinha"
       })
       .then((res)=>{
@@ -76,56 +77,56 @@ function Compiler() {
     //File system functions
     
     const handleFile = ()=>{
-      axios.post("https://code-pro-backend.vercel.app/user/add",{
+    axios.post("https://code-editor-pro-backend.vercel.app//user/add",{
+      username : "Arijeet Sinha",
+      FileName : filename + "." + language,
+      Code : code,
+      Language : language
+    })
+    .then((res)=>{
+      alert(res.data.msg);
+      showFiles();
+    })
+    .catch((e)=>{
+      console.log("Error while adding file: ",e);
+    })
+  }
+
+  const handleFiledDelete = (filename) =>{
+    axios.delete("https://code-editor-pro-backend.vercel.app//user/delete",{
+      data : {
         username : "Arijeet Sinha",
-        FileName : filename + "." + language,
-        Code : code,
-        Language : language
-      })
-      .then((res)=>{
-        alert(res.data.msg);
-        showFiles();
-      })
-      .catch((e)=>{
-        console.log("Error while adding file: ",e);
-      })
-    }
-  
-    const handleFiledDelete = (filename) =>{
-      axios.delete("https://code-pro-backend.vercel.app/user/delete",{
-        data : {
-          username : "Arijeet Sinha",
-          FileName : filename
-        }
-      })
-      .then((res)=>{
-        alert(res.data.msg);
-        showFiles();
-      })
-      .catch((e)=>{
-        console.log(("Error While adding data: ",e));
-      })
-    }
-  
-    const handleCurrentFile =(current_code,file_name )=>{
-      setCode(current_code);
-      setCurrentFile(file_name);
-    }
-  
-    const EditFile =()=>{
-      axios.post("https://code-pro-backend.vercel.app/user/updateFile",{
-        username : "Arijeet Sinha",
-        FileName : currentFile,
-        Code : code,
-        Language : language
-      })
-      .then((res)=>{
-        alert(res.data.msg);
-      })
-      .catch((e)=>{
-        console.log("Error while updating file:",e);
-      })
-    }
+        FileName : filename
+      }
+    })
+    .then((res)=>{
+      alert(res.data.msg);
+      showFiles();
+    })
+    .catch((e)=>{
+      console.log(("Error While adding data: ",e));
+    })
+  }
+
+  const handleCurrentFile =(current_code,file_name )=>{
+    setCode(current_code);
+    setCurrentFile(file_name);
+  }
+
+  const EditFile =()=>{
+    axios.post("https://code-editor-pro-backend.vercel.app//user/updateFile",{
+      username : "Arijeet Sinha",
+      FileName : currentFile,
+      Code : code,
+      Language : language
+    })
+    .then((res)=>{
+      alert(res.data.msg);
+    })
+    .catch((e)=>{
+      console.log("Errror while updateing file:",e);
+    })
+  }
   
   return (
     
