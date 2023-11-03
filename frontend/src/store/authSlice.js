@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     status : false,
-    userData: null
+    userData: null,
+    userName: "",
 }
 
 // We will use this authSlice to check whether the user is authenticated or not
@@ -12,11 +13,13 @@ const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.status = true;
-            state.userData = action.payload.userData;
+            state.userData = action.payload;
+            state.userName = action.payload.name;
         },
         logout: (state) => {
             state.status = false;
             state.userData = null;
+            state.userName = "";
         }
      }
 })

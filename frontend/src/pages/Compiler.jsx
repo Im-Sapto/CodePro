@@ -9,8 +9,19 @@ import "ace-builds/src-noconflict/theme-dracula";
 
 function Compiler() {
 
+    // Taking userName & userData from the store
+    const username = useSelector((state)=>state.auth.userName);
     const userData = useSelector((state) => state.auth.userData);
-    console.log(userData.name);
+    const [userName, setUserName] = useState("");
+
+    // Setting userName
+    useEffect(()=>{
+      if(username != undefined){
+        setUserName(username)
+      }else{
+        setUserName(userData.userData.name);
+      }
+    },[username,setUserName,userData])
 
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('py');
@@ -42,7 +53,7 @@ function Compiler() {
 
     const showFiles = () =>{
       axios.post("https://code-pro-backend.vercel.app/user/files",{
-        username : userData.name
+        username : userName
       })
       .then((res)=>{
         // console.log(res.data);
@@ -81,7 +92,7 @@ function Compiler() {
     
     const handleFile = ()=>{
     axios.post("https://code-pro-backend.vercel.app/user/add",{
-      username : userData.name,
+      username : userName,
       FileName : filename + "." + language,
       Code : code,
       Language : language
@@ -98,7 +109,7 @@ function Compiler() {
   const handleFiledDelete = (filename) =>{
     axios.delete("https://code-pro-backend.vercel.app/user/delete",{
       data : {
-        username : userData.name,
+        username : userName,
         FileName : filename
       }
     })
@@ -118,7 +129,7 @@ function Compiler() {
 
   const EditFile =()=>{
     axios.post("https://code-pro-backend.vercel.app/user/updateFile",{
-      username : userData.name,
+      username : userName,
       FileName : currentFile,
       Code : code,
       Language : language
@@ -192,14 +203,24 @@ function Compiler() {
             value={filename}
             onChange={(event)=>setFileName(event.target.value)}
           />
-          <button onClick={handleFile}>Save</button>
+          <button 
+          className='p-2 m-2 bg-green-600' 
+          onClick={handleFile}
+          >
+            Save
+          </button>
         </div>
         <div>
           <div className='cursor-pointer' id="click-obj" onClick={showFiles}>Show Files</div>
           {Files.map((item)=>(
             <div key={item._id}>
               <div id='click-obj' onClick={()=>handleCurrentFile(item.Code,item.FileName)}>{item.FileName}
-                <button onClick={()=>handleFiledDelete(item.FileName)}>delete</button>
+                <button 
+                className='p-2 m-2 bg-red-600' 
+                onClick={()=>handleFiledDelete(item.FileName)}
+                >
+                  delete
+                </button>
               </div>
             </div>
           ))}
