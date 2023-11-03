@@ -211,7 +211,7 @@ function Compiler() {
           </button>
         </div>
         <div>
-          <div className='cursor-pointer' id="click-obj" onClick={showFiles}>Show Files</div>
+          <div className=' bg-blue-700 text-center cursor-pointer' id="click-obj" onClick={showFiles}>Show Files</div>
           {Files.map((item)=>(
             <div key={item._id}>
               <div id='click-obj' onClick={()=>handleCurrentFile(item.Code,item.FileName)}>{item.FileName}
