@@ -147,11 +147,19 @@ function Compiler() {
     <div >
     <h1 className='text-center text-2xl font-bold '>Code Compiler</h1>
     <div className='flex justify-between mx-10 mb-8 mt-2'>
+
       <div>
-      <div id='headername'>
-      <h2>{currentFile}</h2>
-      { currentFile ? (<button onClick={EditFile}>Save Current File</button>):(<div></div>)}
-      </div>
+        <div id='headername'>
+          <h2>{currentFile}</h2>
+
+          { currentFile ? (<button 
+          className='p-2 my-2 bg-green-600' 
+          onClick={EditFile}
+          >
+            Save Current File
+          </button>):(<div></div>)}
+        </div>
+
         <AceEditor
           mode={mode}
           theme='dracula'
@@ -214,12 +222,18 @@ function Compiler() {
           <div className=' bg-blue-700 text-center cursor-pointer' id="click-obj" onClick={showFiles}>Show Files</div>
           {Files.map((item)=>(
             <div key={item._id}>
-              <div id='click-obj' onClick={()=>handleCurrentFile(item.Code,item.FileName)}>{item.FileName}
+              <div id='click-obj'>
+
+                <span 
+                className='cursor-pointer' 
+                onClick={()=>handleCurrentFile(item.Code,item.FileName)}
+                >{item.FileName}</span>
+
                 <button 
                 className='p-2 m-2 bg-red-600' 
                 onClick={()=>handleFiledDelete(item.FileName)}
                 >
-                  delete
+                  Delete
                 </button>
               </div>
             </div>
