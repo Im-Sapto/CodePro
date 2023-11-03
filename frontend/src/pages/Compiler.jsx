@@ -178,7 +178,7 @@ function Compiler() {
           <option value="js">Javascript</option>
           <option value="go">Golang</option>
         </select>
-        <button onClick={handleCompile}>Compile</button><br />
+        <button className='p-2 m-2 bg-slate-500 ' onClick={handleCompile}>Compile</button><br />
         <label htmlFor='code-input'>Input </label>
         <textarea
           id='code-input'
