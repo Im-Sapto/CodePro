@@ -19,7 +19,7 @@ function ContactUs() {
             <label htmlFor="message" className="block mb-2 text-base font-semibold text-gray-900">Your message</label>
             <textarea id="message" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Leave a comment..."></textarea>
           </div>
-          <button type="submit" className="bg-blue-700 duration-200 hover:bg-[#27283D] text-white font-bold py-2 px-5 rounded-full">Send message</button>
+          <button type="submit" className="bg-[#27283D] duration-200 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full">Send message</button>
         </form>
       </div>
     </section>
