@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+shimport { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import AceEditor from "react-ace";
@@ -82,9 +82,11 @@ function Compiler() {
   useEffect(() => {
     switch (language) {
       case "c":
+        setCode('');
         setMode('java');
         break;
       case "cpp":
+        setCode('');
         setMode('java');
         break;
       case "py":
@@ -96,6 +98,7 @@ function Compiler() {
         setMode('java');
         break;
       case "cs":
+        setCode('');
         setMode('csharp');
         break;
       case "js":
