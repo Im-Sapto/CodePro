@@ -16,6 +16,7 @@ import LogoJava from '../components/LogoJava'
 import LogoC from '../components/LogoC'
 import LogoCPlusPlus from '../components/LogoCPlusPlus'
 import LogoCSharp from '../components/LogoCSharp'
+import LogoGoLang from '../components/LogoGoLang'
 
 
 function Compiler() {
@@ -179,12 +180,38 @@ function Compiler() {
     setCurrentFile("Untitled");
   }
 
+  const [browserHeight, setBrowserHeight] = useState(window.innerHeight);
+  const navbarHeight = '53px';
+  const filenameHeight = '32px';
+
+  useEffect(() => {
+    // Update the browserHeight when the window is resized
+    const handleResize = () => {
+      setBrowserHeight(window.innerHeight);
+    };
+
+    // Attach the event listener
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); // Empty dependency array to run the effect only once on mount
+
+  const mainBodyHeight = browserHeight - parseInt(navbarHeight, 10);
+  const aceEditorHeight = browserHeight - parseInt(navbarHeight, 10) - parseInt(filenameHeight, 10);
+  //console.log(mainBodyHeight);
+  const mainBodyHeightpx = `${mainBodyHeight}px`;
+  const aceEditorHeightpx = `${aceEditorHeight}px`;
+  //console.log(mainBodyHeightpx);
+
   return (
 
     <section>
       {/* main body starts here */}
       {/* starts - vertical division of the body - 20%: sidebar, 50%: codebox, 30%: resultbox */}
-      <div className='flex flex-row max-h-[500px] bg-slate-800'>
+      <div style={{ height: mainBodyHeight }} className='flex flex-row bg-slate-800'>
         {/* start - sidebar */}
         <div className='basis-[15%] overflow-y-scroll bg-slate-800 border-r-[1px] border-gray-500 relative flex flex-col justify-between'>
           {/* start - control_sidebar */}
@@ -248,7 +275,7 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoPython />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>Python</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>Python</p>
               </div>
             </button>
             {/* end - LogoPython */}
@@ -258,7 +285,7 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoJavaScript />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>JavaScript</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>JavaScript</p>
               </div>
             </button>
             {/* end - LogoJavaScript */}
@@ -268,7 +295,7 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoJava />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>Java</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>Java</p>
               </div>
             </button>
             {/* end - LogoJava */}
@@ -278,7 +305,7 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoC />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>C</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>C</p>
               </div>
             </button>
             {/* end - LogoC */}
@@ -288,7 +315,7 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoCPlusPlus />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>C++</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>C++</p>
               </div>
             </button>
             {/* end - LogoCPlusPlus */}
@@ -298,10 +325,20 @@ function Compiler() {
                 <div className='pr-2'>
                   <LogoCSharp />
                 </div>
-                <p className='pl-2 border-l-[1px] border-l-gray-50'>C#</p>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>C#</p>
               </div>
             </button>
             {/* end - LogoCSharp */}
+            {/* start - LogoGoLang*/}
+            <button className={`m-2 mt-0 p-2 border-2 border-gray-50  hover:border-2 hover:border-blue-300 hover:bg-blue-500 ${language == 'cs' ? 'bg-blue-500 border-blue-300' : ''}`} onClick={() => setLanguage('py')}>
+              <div className='flex flex-row text-gray-50'>
+                <div className='pr-2'>
+                  <LogoGoLang />
+                </div>
+                <p className='truncate pl-2 border-l-[1px] border-l-gray-50'>Go</p>
+              </div>
+            </button>
+            {/* end - LogoGoLang */}
           </div>
           {/* start - select_languages_sidebar */}
         </div>
@@ -321,10 +358,13 @@ function Compiler() {
               </button> */}
             </div>
           </div>
+          {/* {console.log(`The value is: ${mainBodyHeightpx}`)};
+          {console.log(`The type is: ${typeof (mainBodyHeightpx)}`)}; */}
           <AceEditor
             mode={mode}
             theme='dracula'
-            height='468px'
+            //height='565px'
+            height={aceEditorHeight}
             width='full'
             setOptions={{
               enableBasicAutocompletion: true,
@@ -339,9 +379,9 @@ function Compiler() {
         </div>
         {/* end - codebox */}
         {/* start - resultbox */}
-        <div className='w-full max-h-[500px] flex flex-col basis-[30%]'>
+        <div className='w-full flex flex-col basis-[30%]'>
           {/* start - run_button */}
-          <div className='basis-[10%]'>
+          <div className='h-[40]px'>
             <button className='w-full h-full p-2 border-2  hover:border-2 bg-green-500 border-green-100 hover:border-green-300 hover:bg-green-600' onClick={handleCompile}>
               <div className='flex justify-center text-gray-50'>
                 {/* {console.log(handleCompile)}
@@ -352,32 +392,36 @@ function Compiler() {
             </button>
           </div>
           {/* end - run_button */}
-          {/* start - inputbox */}
-          <div className='basis-[20%] p-2 border-2 border-t-0 border-gray-50 bg-slate-800' >
-            <label htmlFor="inputbox" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Input Box</label>
-            <textarea id="inputbox" className="block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Enter input if required"
-              onChange={(e) => setInput(e.target.value)}
-            ></textarea>
-          </div>
-          {/* end - inputbox */}
-          {/* start - outputbox */}
-          <div className='basis-[40%] p-2 border-2 border-t-0 border-gray-50 bg-slate-800'>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Output Box</label>
-            <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your output . . .">
-              {output}
-            </p>
-          </div>
-          {/* end - outputbox */}
-          {/* start - errorbox */}
-          {error ? (
-            <div className='basis-[30%] p-2 border-2 border-t-0 border-gray-50 bg-slate-800 overflow-auto'>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Error Box</label>
-              <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your error . . .">
-                {error}
+          {/* start - mainresultbox */}
+          <div className='flex flex-col justify-between'>
+            {/* start - inputbox */}
+            <div className='p-2 border-2 border-t-0 border-gray-50 bg-slate-800' >
+              <label htmlFor="inputbox" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Input Box</label>
+              <textarea id="inputbox" className="block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Enter input if required"
+                onChange={(e) => setInput(e.target.value)}
+              ></textarea>
+            </div>
+            {/* end - inputbox */}
+            {/* start - outputbox */}
+            <div className='p-2 border-2 border-t-0 border-gray-50 bg-slate-800'>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Output Box</label>
+              <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your output . . .">
+                {output}
               </p>
             </div>
-          ) : (<div></div>)}
-          {/* end - errorbox */}
+            {/* end - outputbox */}
+            {/* start - errorbox */}
+            {error ? (
+              <div className='p-2 border-2 border-t-0 border-gray-50 bg-slate-800 overflow-auto'>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Error Box</label>
+                <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your error . . .">
+                  {error}
+                </p>
+              </div>
+            ) : null}
+            {/* end - errorbox */}
+          </div>
+          {/* end - mainresultbox */}
         </div>
         {/* end - resultbox */}
       </div>
