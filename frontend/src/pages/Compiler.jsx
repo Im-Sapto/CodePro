@@ -181,7 +181,7 @@ function Compiler() {
   }
 
   const [browserHeight, setBrowserHeight] = useState(window.innerHeight);
-  const navbarHeight = '63px';
+  const navbarHeight = '65px';
   const filenameHeight = '32px';
 
   useEffect(() => {
