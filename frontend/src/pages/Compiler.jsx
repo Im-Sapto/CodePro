@@ -83,9 +83,11 @@ function Compiler() {
   useEffect(() => {
     switch (language) {
       case "c":
+        setCode("");
         setMode('java');
         break;
       case "cpp":
+        setCode("");
         setMode('java');
         break;
       case "py":
@@ -97,6 +99,7 @@ function Compiler() {
         setMode('java');
         break;
       case "cs":
+        setCode("");
         setMode('csharp');
         break;
       case "js":
