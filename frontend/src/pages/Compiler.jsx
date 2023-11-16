@@ -83,11 +83,21 @@ function Compiler() {
   useEffect(() => {
     switch (language) {
       case "c":
-        setCode("");
+        setCode(`#include <stdio.h>
+
+        int main() {
+            printf("Hello World!\n");
+            return 0;
+        }`);
         setMode('java');
         break;
       case "cpp":
-        setCode("");
+        setCode(`#include <iostream>
+
+        int main() {
+            std::cout << "Hello World!" << std::endl;
+            return 0;
+        }`);
         setMode('java');
         break;
       case "py":
@@ -95,15 +105,27 @@ function Compiler() {
         setMode('python');
         break;
       case "java":
-        setCode('//Main Class Name Should be Progman');
+        setCode(`class Untitled {
+          public static void main(String[] args) {
+              System.out.println("Hello World!!");
+          }
+      }`);
         setMode('java');
         break;
       case "cs":
-        setCode("");
+        setCode(`using System;
+
+        class Untitled
+        {
+            static void Main()
+            {
+                Console.WriteLine("Hello World!!");
+            }
+        }`);
         setMode('csharp');
         break;
       case "js":
-        setCode('console.log("Hello World!");');
+        setCode('console.log("Hello World!!");');
         setMode('javascript');
         break;
       default:
@@ -330,7 +352,7 @@ function Compiler() {
             </button>
             {/* end - LogoCSharp */}
             {/* start - LogoGoLang*/}
-            <button className={`m-2 mt-0 p-2 border-2 border-gray-50  hover:border-2 hover:border-blue-300 hover:bg-blue-500 ${language == 'cs' ? 'bg-blue-500 border-blue-300' : ''}`} onClick={() => setLanguage('py')}>
+            <button className={`m-2 mt-0 p-2 border-2 border-gray-50  hover:border-2 hover:border-blue-300 hover:bg-blue-500 ${language == 'go' ? 'bg-blue-500 border-blue-300' : ''}`} onClick={() => setLanguage('go')}>
               <div className='flex flex-row text-gray-50'>
                 <div className='pr-2'>
                   <LogoGoLang />
