@@ -85,23 +85,45 @@ function Compiler() {
   useEffect(() => {
     switch (language) {
       case "c":
-        setCode("");
+        setCode(`#include <stdio.h>
+
+int main() {
+    printf("Hello World!");
+    return 0;
+}`);
         setMode('c_cpp');
         break;
       case "cpp":
-        setCode("");
+        setCode(`#include <iostream>
+
+int main() {
+    std::cout << "Hello World!" << std::endl;
+    return 0;
+}`);
         setMode('c_cpp');
         break;
       case "py":
-        setCode('print("Hello World!!")');
+        setCode('print("Hello World!")');
         setMode('python');
         break;
       case "java":
-        setCode('//Main Class Name Should be Progman');
+        setCode(`//Main Class Name Should be Progman
+class Progman {
+  public static void main(String[] args) {
+      System.out.println("Hello World!");
+  }
+}`);
         setMode('java');
         break;
       case "cs":
-        setCode("");
+        setCode(`using System;
+class Untitled
+{
+    static void Main()
+    {
+        Console.WriteLine("Hello World!");
+    }
+}`);
         setMode('csharp');
         break;
       case "js":
@@ -109,7 +131,13 @@ function Compiler() {
         setMode('javascript');
         break;
       case "go":
-        setCode('');
+        setCode(`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}`);
         setMode('golang');
         break;
       default:
