@@ -108,6 +108,7 @@ int main() {
         break;
       case "java":
         setCode(`//Main Class Name Should be Progman
+        
 class Progman {
   public static void main(String[] args) {
       System.out.println("Hello World!");
@@ -117,6 +118,7 @@ class Progman {
         break;
       case "cs":
         setCode(`using System;
+        
 class Untitled
 {
     static void Main()
