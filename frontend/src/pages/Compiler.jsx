@@ -6,10 +6,12 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-golang";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/ext-language_tools"
-import { DocumentPlusIcon, FolderOpenIcon, TrashIcon, FolderIcon, PlayIcon, PlusIcon, XCircleIcon } from '@heroicons/react/24/outline'
-import { FolderIcon as SolidFolderIcon, PlayIcon as SolidPlayIcon, XCircleIcon as SolidXCircleIcon } from '@heroicons/react/24/solid'
+import { DocumentPlusIcon, TrashIcon, FolderIcon, PlayIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { FolderIcon as SolidFolderIcon } from '@heroicons/react/24/solid'
 import LogoPython from '../components/LogoPython'
 import LogoJavaScript from '../components/LogoJavaScript'
 import LogoJava from '../components/LogoJava'
@@ -29,8 +31,8 @@ function Compiler() {
     if (username != undefined) {
       setUserName(username)
     } else {
-      setUserName(userData.userData.name);
-      // console.log(userData.userData.name);
+      setUserName(userData.name);
+      // console.log(userData.name);
     }
   }, [username, setUserName, userData])
 
@@ -85,48 +87,57 @@ function Compiler() {
       case "c":
         setCode(`#include <stdio.h>
 
-        int main() {
-            printf("Hello World!\n");
-            return 0;
-        }`);
-        setMode('java');
+int main() {
+    printf("Hello World!");
+    return 0;
+}`);
+        setMode('c_cpp');
         break;
       case "cpp":
         setCode(`#include <iostream>
 
-        int main() {
-            std::cout << "Hello World!" << std::endl;
-            return 0;
-        }`);
-        setMode('java');
+int main() {
+    std::cout << "Hello World!" << std::endl;
+    return 0;
+}`);
+        setMode('c_cpp');
         break;
       case "py":
-        setCode('print("Hello World!!")');
+        setCode('print("Hello World!")');
         setMode('python');
         break;
       case "java":
         setCode(`class Untitled {
-          public static void main(String[] args) {
-              System.out.println("Hello World!!");
-          }
-      }`);
+  public static void main(String[] args) {
+      System.out.println("Hello World!");
+  }
+}`);
         setMode('java');
         break;
       case "cs":
         setCode(`using System;
-
-        class Untitled
-        {
-            static void Main()
-            {
-                Console.WriteLine("Hello World!!");
-            }
-        }`);
+class Untitled
+{
+    static void Main()
+    {
+        Console.WriteLine("Hello World!");
+    }
+}`);
         setMode('csharp');
         break;
       case "js":
-        setCode('console.log("Hello World!!");');
+        setCode('console.log("Hello World!");');
         setMode('javascript');
+        break;
+      case "go":
+        setCode(`package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}`);
+        setMode('golang');
         break;
       default:
         setCode('print("Hello World!!")');
@@ -191,7 +202,8 @@ function Compiler() {
   }
 
   // setting selected filename and show corresponding code
-  const handleCurrentFile = (current_code, file_name) => {
+  const handleCurrentFile = (current_code, file_name, selected_language) => {
+    setLanguage(selected_language);
     setCode(current_code);
     setCurrentFile(file_name);
   }
@@ -203,7 +215,7 @@ function Compiler() {
   }
 
   const [browserHeight, setBrowserHeight] = useState(window.innerHeight);
-  const navbarHeight = '65px';
+  const navbarHeight = '63px';
   const filenameHeight = '32px';
 
   useEffect(() => {
@@ -224,8 +236,8 @@ function Compiler() {
   const mainBodyHeight = browserHeight - parseInt(navbarHeight, 10);
   const aceEditorHeight = browserHeight - parseInt(navbarHeight, 10) - parseInt(filenameHeight, 10);
   //console.log(mainBodyHeight);
-  const mainBodyHeightpx = `${mainBodyHeight}px`;
-  const aceEditorHeightpx = `${aceEditorHeight}px`;
+  // const mainBodyHeightpx = `${mainBodyHeight}px`;
+  // const aceEditorHeightpx = `${aceEditorHeight}px`;
   //console.log(mainBodyHeightpx);
 
   return (
@@ -274,7 +286,7 @@ function Compiler() {
                   {/* {console.log({ item, currentFile })} */}
                   <p
                     className='truncate cursor-pointer text-white hover:text-green-500'
-                    onClick={() => handleCurrentFile(item.Code, item.FileName)}
+                    onClick={() => handleCurrentFile(item.Code, item.FileName, item.Language)}
                   >{item.FileName}</p>
 
                   <button
