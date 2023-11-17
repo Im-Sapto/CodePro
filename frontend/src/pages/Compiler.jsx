@@ -6,10 +6,12 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/mode-python";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-golang";
+import "ace-builds/src-noconflict/mode-c_cpp";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/ext-language_tools"
-import { DocumentPlusIcon, FolderOpenIcon, TrashIcon, FolderIcon, PlayIcon, PlusIcon, XCircleIcon } from '@heroicons/react/24/outline'
-import { FolderIcon as SolidFolderIcon, PlayIcon as SolidPlayIcon, XCircleIcon as SolidXCircleIcon } from '@heroicons/react/24/solid'
+import { DocumentPlusIcon, TrashIcon, FolderIcon, PlayIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { FolderIcon as SolidFolderIcon } from '@heroicons/react/24/solid'
 import LogoPython from '../components/LogoPython'
 import LogoJavaScript from '../components/LogoJavaScript'
 import LogoJava from '../components/LogoJava'
@@ -84,11 +86,11 @@ function Compiler() {
     switch (language) {
       case "c":
         setCode("");
-        setMode('java');
+        setMode('c_cpp');
         break;
       case "cpp":
         setCode("");
-        setMode('java');
+        setMode('c_cpp');
         break;
       case "py":
         setCode('print("Hello World!!")');
@@ -105,6 +107,10 @@ function Compiler() {
       case "js":
         setCode('console.log("Hello World!");');
         setMode('javascript');
+        break;
+      case "go":
+        setCode('');
+        setMode('golang');
         break;
       default:
         setCode('print("Hello World!!")');
@@ -169,7 +175,8 @@ function Compiler() {
   }
 
   // setting selected filename and show corresponding code
-  const handleCurrentFile = (current_code, file_name) => {
+  const handleCurrentFile = (current_code, file_name, selected_language) => {
+    setLanguage(selected_language);
     setCode(current_code);
     setCurrentFile(file_name);
   }
@@ -202,8 +209,8 @@ function Compiler() {
   const mainBodyHeight = browserHeight - parseInt(navbarHeight, 10);
   const aceEditorHeight = browserHeight - parseInt(navbarHeight, 10) - parseInt(filenameHeight, 10);
   //console.log(mainBodyHeight);
-  const mainBodyHeightpx = `${mainBodyHeight}px`;
-  const aceEditorHeightpx = `${aceEditorHeight}px`;
+  // const mainBodyHeightpx = `${mainBodyHeight}px`;
+  // const aceEditorHeightpx = `${aceEditorHeight}px`;
   //console.log(mainBodyHeightpx);
 
   return (
@@ -252,7 +259,7 @@ function Compiler() {
                   {/* {console.log({ item, currentFile })} */}
                   <p
                     className='truncate cursor-pointer text-white hover:text-green-500'
-                    onClick={() => handleCurrentFile(item.Code, item.FileName)}
+                    onClick={() => handleCurrentFile(item.Code, item.FileName, item.Language)}
                   >{item.FileName}</p>
 
                   <button
@@ -330,7 +337,7 @@ function Compiler() {
             </button>
             {/* end - LogoCSharp */}
             {/* start - LogoGoLang*/}
-            <button className={`m-2 mt-0 p-2 border-2 border-gray-50  hover:border-2 hover:border-blue-300 hover:bg-blue-500 ${language == 'cs' ? 'bg-blue-500 border-blue-300' : ''}`} onClick={() => setLanguage('py')}>
+            <button className={`m-2 mt-0 p-2 border-2 border-gray-50  hover:border-2 hover:border-blue-300 hover:bg-blue-500 ${language == 'go' ? 'bg-blue-500 border-blue-300' : ''}`} onClick={() => setLanguage('go')}>
               <div className='flex flex-row text-gray-50'>
                 <div className='pr-2'>
                   <LogoGoLang />
