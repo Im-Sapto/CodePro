@@ -31,8 +31,8 @@ function Compiler() {
     if (username != undefined) {
       setUserName(username)
     } else {
-      setUserName(userData.userData.name);
-      // console.log(userData.userData.name);
+      setUserName(userData.name);
+      // console.log(userData.name);
     }
   }, [username, setUserName, userData])
 
