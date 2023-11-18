@@ -29,6 +29,10 @@ function Compiler() {
   const [userName, setUserName] = useState("");
   const [currentUserId, setCurrentUserId] = useState("");
 
+  // console.log(userData);
+  // console.log(username);
+  // console.log(userId);
+
   useEffect(() => {
     if (username != undefined) {
       setUserName(username);
@@ -36,7 +40,8 @@ function Compiler() {
     } else {
       setUserName(userData.userData.name);
       setCurrentUserId(userData.userData.$id);
-      // console.log(userData.name);
+      // console.log(userData.userData.name);
+      // console.log(userData.userData.$id);
     }
   }, [username, setUserName, userData, userId])
 
@@ -434,8 +439,8 @@ func main() {
               <div className='flex justify-center text-gray-50'>
                 {/* {console.log(handleCompile)}
                 {handleCompile ? <SolidPlayIcon className="h-6 w-6 mr-2" /> : <PlayIcon className="h-6 w-6 mr-2" />} */}
-                <PlayIcon className="h-6 w-6 mr-2" />
-                <p className='pl-2 border-l-gray-50'>Run</p>
+                <PlayIcon className="h-6 w-6 mr-2 font-bold" />
+                <p className='pl-2 border-l-gray-50 font-bold'>Run</p>
               </div>
             </button>
           </div>
@@ -444,7 +449,7 @@ func main() {
           <div style={{ height: mainBodyHeight - 40 }} className='flex flex-col justify-stretch'>
             {/* start - inputbox */}
             <div className='basis-[40%] p-2 border-2 border-t-0 border-gray-50 bg-slate-800' >
-              <label htmlFor="inputbox" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Input Box</label>
+              <label htmlFor="inputbox" className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-400">Input Box</label>
               <textarea id="inputbox" className="block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Enter input if required"
                 onChange={(e) => setInput(e.target.value)}
               ></textarea>
@@ -452,7 +457,7 @@ func main() {
             {/* end - inputbox */}
             {/* start - outputbox */}
             <div className='basis-[60%]  p-2 border-2 border-y-0 border-gray-50 bg-slate-800'>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Output Box</label>
+              <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-400">Output Box</label>
               <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your output . . .">
                 {output}
               </p>
