@@ -23,18 +23,22 @@ import LogoGoLang from '../components/LogoGoLang'
 
 function Compiler() {
 
-  const username = useSelector((state) => state.auth.username);
+  const username = useSelector((state) => state.auth.userName);
   const userData = useSelector((state) => state.auth.userData);
+  const userId = useSelector((state) => state.auth.userId);
   const [userName, setUserName] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
   useEffect(() => {
     if (username != undefined) {
-      setUserName(username)
+      setUserName(username);
+      setCurrentUserId(userId);
     } else {
-      setUserName(userData.name);
+      setUserName(userData.userData.name);
+      setCurrentUserId(userData.userData.$id);
       // console.log(userData.name);
     }
-  }, [username, setUserName, userData])
+  }, [username, setUserName, userData, userId])
 
   const [code, setCode] = useState('print("Hello World!!")');
   const [language, setLanguage] = useState('py');
@@ -53,7 +57,7 @@ function Compiler() {
 
   const handleCompile = () => {
 
-    axios.post('https://code-editor-pro-backend.vercel.app/compile', {
+    axios.post('https://code-pro-backend.vercel.app/compile', {
       code: code,
       language: language,
       input: input
@@ -70,8 +74,8 @@ function Compiler() {
   };
 
   const showFiles = () => {
-    axios.post("https://code-editor-pro-backend.vercel.app/user/files", {
-      username: userName
+    axios.post("https://code-pro-backend.vercel.app/user/files", {
+      userid: currentUserId
     })
       .then((res) => {
         // console.log(res.data);
@@ -153,8 +157,8 @@ func main() {
   //File system functions
 
   const EditFile = () => {
-    axios.post("https://code-editor-pro-backend.vercel.app/user/updateFile", {
-      username: userName,
+    axios.post("https://code-pro-backend.vercel.app/user/updateFile", {
+      userid: currentUserId,
       FileName: currentFile,
       Code: code,
       Language: language
@@ -170,7 +174,8 @@ func main() {
 
   const handleFile = () => {
     if (currentFile === "Untitled") {
-      axios.post("https://code-editor-pro-backend.vercel.app/user/add", {
+      axios.post("https://code-pro-backend.vercel.app/user/add", {
+        userid: currentUserId,
         username: userName,
         FileName: filename + "." + language,
         Code: code,
@@ -189,9 +194,9 @@ func main() {
   }
 
   const handleFiledDelete = (filename) => {
-    axios.delete("https://code-editor-pro-backend.vercel.app/user/delete", {
+    axios.delete("https://code-pro-backend.vercel.app/user/delete", {
       data: {
-        username: userName,
+        userid : currentUserId,
         FileName: filename
       }
     })
