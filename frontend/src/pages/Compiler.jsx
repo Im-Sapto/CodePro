@@ -62,7 +62,7 @@ function Compiler() {
 
   const handleCompile = () => {
 
-    axios.post('https://code-pro-backend.vercel.app/compile', {
+    axios.post('https://code-editor-pro-backend.vercel.app/compile', {
       code: code,
       language: language,
       input: input
@@ -79,7 +79,7 @@ function Compiler() {
   };
 
   const showFiles = () => {
-    axios.post("https://code-pro-backend.vercel.app/user/files", {
+    axios.post("https://code-editor-pro-backend.vercel.app/user/files", {
       userid: currentUserId
     })
       .then((res) => {
@@ -162,7 +162,7 @@ func main() {
   //File system functions
 
   const EditFile = () => {
-    axios.post("https://code-pro-backend.vercel.app/user/updateFile", {
+    axios.post("https://code-editor-pro-backend.vercel.app/user/updateFile", {
       userid: currentUserId,
       FileName: currentFile,
       Code: code,
@@ -179,7 +179,7 @@ func main() {
 
   const handleFile = () => {
     if (currentFile === "Untitled") {
-      axios.post("https://code-pro-backend.vercel.app/user/add", {
+      axios.post("https://code-editor-pro-backend.vercel.app/user/add", {
         userid: currentUserId,
         username: userName,
         FileName: filename + "." + language,
@@ -199,7 +199,7 @@ func main() {
   }
 
   const handleFiledDelete = (filename) => {
-    axios.delete("https://code-pro-backend.vercel.app/user/delete", {
+    axios.delete("https://code-editor-pro-backend.vercel.app/user/delete", {
       data: {
         userid : currentUserId,
         FileName: filename
