@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const FileSystem = require("./models/FileSystem");
+const FileSystem = require("./models/fileSystem");
 
 
 addFile = async(req,res)=>{
