@@ -63,7 +63,7 @@ function Compiler() {
       input: input
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setOutput(response.data.Result);
         setError(response.data.Errors);
       })
