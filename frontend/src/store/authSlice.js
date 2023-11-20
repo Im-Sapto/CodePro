@@ -4,6 +4,7 @@ const initialState = {
     status : false,
     userData: null,
     userName: "",
+    userId : "",
 }
 
 // We will use this authSlice to check whether the user is authenticated or not
@@ -15,11 +16,13 @@ const authSlice = createSlice({
             state.status = true;
             state.userData = action.payload;
             state.userName = action.payload.name;
+            state.userId = action.payload.$id;
         },
         logout: (state) => {
             state.status = false;
             state.userData = null;
             state.userName = "";
+            state.userId = "";
         }
      }
 })

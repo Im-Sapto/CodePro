@@ -6,7 +6,7 @@ export default defineConfig({
   // server :{
   //   proxy :{
   //     "/api" :{
-  //       target : "https://code-pro-backend.vercel.app",
+  //       target : "https://code-editor-pro-backend.vercel.app",
   //       changeOrigin : true,
   //       rewrite: (path) => path.replace(/^\/api/, ''),
   //       secure : false,

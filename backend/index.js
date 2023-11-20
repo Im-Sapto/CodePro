@@ -11,6 +11,7 @@ const file = require("./FileOperations");
 
 
 
+
 const app = express()
 const port = process.env.PORT || 3000;        // Using env variable
 
@@ -97,4 +98,6 @@ const server = http.createServer(app);
 server.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`)
 })
+
+module.exports = app;
 
