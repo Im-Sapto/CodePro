@@ -201,7 +201,7 @@ func main() {
   const handleFiledDelete = (filename) => {
     axios.delete("https://code-editor-pro-backend.vercel.app/user/delete", {
       data: {
-        userid : currentUserId,
+        userid: currentUserId,
         FileName: filename
       }
     })
@@ -432,7 +432,7 @@ func main() {
         </div>
         {/* end - codearea */}
         {/* start - resultbox */}
-        <div className='w-full flex flex-col basis-[30%]'>
+        <div className='w-full flex flex-col basis-[30%] max-w-[30%]'>
           {/* start - run_button */}
           <div className='h-[40]px'>
             <button className='w-full h-full p-2 border-2  hover:border-2 bg-green-500 border-green-100 hover:border-green-300 hover:bg-green-600' onClick={handleCompile}>
@@ -450,7 +450,7 @@ func main() {
             {/* start - inputbox */}
             <div className='basis-[40%] p-2 border-2 border-t-0 border-gray-50 bg-slate-800' >
               <label htmlFor="inputbox" className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-400">Input Box</label>
-              <textarea id="inputbox" className="block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Enter input if required"
+              <textarea id="inputbox" className="w-full overflow-x-auto whitespace-pre-wrap text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Enter input if required"
                 onChange={(e) => setInput(e.target.value)}
               ></textarea>
             </div>
@@ -458,18 +458,18 @@ func main() {
             {/* start - outputbox */}
             <div className='basis-[60%]  p-2 border-2 border-y-0 border-gray-50 bg-slate-800'>
               <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-400">Output Box</label>
-              <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your output . . .">
+              <pre className="w-full overflow-x-auto whitespace-pre-wrap text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your output . . .">
                 {output}
-              </p>
+              </pre>
             </div>
             {/* end - outputbox */}
             {/* start - errorbox */}
             {error ? (
-              <div className='p-2 border-2 border-b-0 border-gray-50 bg-slate-800 overflow-auto'>
+              <div className='p-2 border-2 border-b-0 border-gray-50 bg-slate-800'>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Error Box</label>
-                <p className="break-words block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your error . . .">
+                <pre className="overflow-x-auto overflow-y-scroll whitespace-pre-wrap block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your error . . .">
                   {error}
-                </p>
+                </pre>
               </div>
             ) : null}
             {/* end - errorbox */}
