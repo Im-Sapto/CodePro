@@ -466,7 +466,7 @@ func main() {
             {/* start - errorbox */}
             {error ? (
               <div className='p-2 border-2 border-b-0 border-gray-50 bg-slate-800'>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Error Box</label>
+                <label className="block mb-2 text-sm font-medium text-gray-100 dark:text-gray-400">Error Box</label>
                 <pre className="overflow-x-auto overflow-y-scroll whitespace-pre-wrap block p-2 w-full text-sm text-gray-900 bg-gray-50 border border-gray-300" placeholder="Your error . . .">
                   {error}
                 </pre>
